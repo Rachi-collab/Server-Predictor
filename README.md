@@ -34,19 +34,8 @@ js/                 # Frontend scripts (data generation + charts)
 ml/                 # ML pipeline: training, features, requirements
 ```
 
-Deploy (GitHub Pages)
-1. Push the `main` branch to GitHub.
-2. In the repository on GitHub, go to Settings → Pages and set the source to
-   the `main` branch and the root folder.
-3. Your site will be available at `https://<username>.github.io/<repo-name>/`.
-
 Contributing
 - Feel free to open issues or pull requests. For code changes, follow the
   existing style and add tests where appropriate.
 
-License
-MIT — see `LICENSE` if present.
-
-Contact
-Open an issue or reach out via the repository's discussion/PR workflow.
 

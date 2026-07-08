@@ -1,43 +1,44 @@
 # Server Predictor
 
-A compact project combining a browser-based dashboard and a simple ML pipeline
-for predicting server issues. This repository contains a static demo (HTML/CSS/JS)
-and a reproducible `ml/` pipeline used for synthetic data generation,
-feature engineering, and model training.
+Server Predictor is a small project that brings together a polished front-end demo and a practical machine learning workflow for spotting likely server failures before they become serious issues. The goal is to make the idea feel approachable: a browser-based dashboard for exploration, paired with a reproducible training pipeline that can be extended with real telemetry later.
 
-Features
+## What this project includes
 
-- Zero-backend demo dashboard that runs in the browser on generated data.
-- A small, reproducible training pipeline in `ml/` that trains an XGBoost model.
-- Example feature engineering and evaluation scripts suitable for extension.
+- A clean, interactive dashboard built with HTML, CSS, and JavaScript
+- A lightweight ML pipeline in the `ml/` folder for synthetic data generation, feature engineering, and model training
+- A simple structure that makes it easy to swap in real infrastructure data later
 
-Quickstart
+## Why it exists
 
-1. Install Python dependencies and run the training pipeline (optional):
+The project is meant to show how predictive monitoring could work in a realistic environment without requiring a full backend setup. It focuses on the experience of presenting risk signals clearly and making the model workflow understandable.
 
-```
+## Quick start
+
+### 1. Run the ML training pipeline (optional)
+
+```bash
 cd ml
 pip install -r requirements.txt
 python train_model.py
 ```
 
-1. Open the demo dashboard locally (no server required):
+### 2. Open the dashboard locally
 
-```
-open index.html   # or double-click index.html in your file explorer
-```
+You do not need a server to view the demo. Open the project folder and launch `index.html` in your browser.
 
-Repository layout
+## Project structure
 
-```
-index.html          # Demo dashboard (GitHub Pages entry)
-css/style.css       # Styles for the demo
-js/                 # Frontend scripts (data generation + charts)
-ml/                 # ML pipeline: training, features, requirements
+```text
+index.html          # Main landing page and dashboard UI
+css/style.css       # Styling for the experience
+js/                 # Frontend logic, data, and chart rendering
+ml/                 # Training workflow and feature engineering code
 ```
 
-Contributing
+## Notes
 
-- Feel free to open issues or pull requests. For code changes, follow the
-  existing style and add tests where appropriate.
+The dashboard uses generated sample data so it works instantly and remains easy to test. The machine learning portion is there to show a realistic training flow that can later be connected to real operational data.
 
+## Contributing
+
+If you want to improve the visuals, refine the model workflow, or add new examples, feel free to open an issue or submit a pull request.

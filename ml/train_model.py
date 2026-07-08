@@ -1,28 +1,3 @@
-"""
-train_model.py
-End-to-end, runnable training pipeline for the PredictOps server-failure model.
-
-Usage:
-    python -m venv venv && source venv/bin/activate   # optional
-    pip install -r requirements.txt
-    python train_model.py
-
-What it does:
-1. Generates a realistic synthetic telemetry dataset (since no real client data
-   is available for this project) with the same statistical shape described in
-   the assignment: memory, disk I/O, network latency, error logs, crash counts,
-   and maintenance history, with injected missingness up to 25%.
-2. Builds rolling-window features via features.py
-3. Trains an XGBoost classifier (LightGBM used as a second model if installed)
-4. Evaluates on a time-based holdout split (not a random shuffle split, to
-   avoid leaking future information into training)
-5. Prints precision / recall / F1 / ROC-AUC and saves a feature-importance plot
-
-This is the real, reproducible counterpart to the numbers shown on the
-marketing dashboard (index.html). Swap `generate_synthetic_telemetry()` for a
-real data loader to point this at actual client logs.
-"""
-
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta

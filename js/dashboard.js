@@ -1,8 +1,3 @@
-/* ═══════════════════════════════════════════════════
-   PredictOps — Dashboard Rendering & Interaction Layer
-   ═══════════════════════════════════════════════════ */
-
-// ─── KPI Strip ─────────────────────────────────────
 function renderKPIStrip() {
   const k = getKPIs();
   const el = document.getElementById('kpiStrip');
@@ -40,8 +35,6 @@ function renderKPIStrip() {
     </div>
   `;
 }
-
-// ─── Top critical servers table ───────────────────
 function renderTopServersTable() {
   const tbody = document.getElementById('topServersTbody');
   if (!tbody) return;
@@ -63,32 +56,32 @@ function renderTopServersTable() {
     </tr>
   `).join('');
 }
-
-// ─── DC Heatmap ────────────────────────────────────
 function renderDCHeatmap() {
   const el = document.getElementById('dcHeatmap');
   if (!el) return;
   const stats = getDCStats();
   const maxAvg = Math.max(...stats.map(s => s.avg), 1);
-  el.innerHTML = stats.map(s => `
-    <div class="dc-heatmap-row">
-      <div class="dc-heatmap-label">${s.dc}</div>
-      <div class="dc-heatmap-bar-track">
-        <div class="dc-heatmap-bar-fill" style="width:${(s.avg / maxAvg) * 100}%; background:${getRiskColor(getRiskLevel(s.avg))}66;"></div>
+  el.innerHTML = stats.map(s => {
+    const width = `${(s.avg / maxAvg) * 100}%`;
+    const color = `${getRiskColor(getRiskLevel(s.avg))}66`;
+    return `
+      <div class="dc-heatmap-row">
+        <div class="dc-heatmap-label">${s.dc}</div>
+        <div class="dc-heatmap-bar-track">
+          <div class="dc-heatmap-bar-fill" style="width:${width}; background:${color};"></div>
+        </div>
+        <div class="dc-val">${s.avg}%</div>
       </div>
-      <div class="dc-val">${s.avg}%</div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
-
-// ─── Servers grid view ─────────────────────────────
 function renderServerGrid() {
   const grid = document.getElementById('serverGrid');
   if (!grid) return;
-  const search = (document.getElementById('serverSearch')?.value || '').toUpperCase();
+  const search = (document.getElementById('serverSearch')?.value || '').trim().toUpperCase();
   const list = State.filtered.filter(s => s.name.includes(search));
   grid.innerHTML = list.map(s => `
-    <div class="srv-card risk-${s.riskLevel} ${State.selectedServerId === s.id ? 'selected' : ''}" onclick="selectServer(${s.id})">
+    <div class="srv-card risk-${s.riskLevel} ${State.selectedServerId === s.id ? 'selected' : ''}" onclick="selectServer(${s.id})" role="button" tabindex="0" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectServer(${s.id}); }">
       <div class="srv-name">${s.name}</div>
       <div class="srv-dc">${s.clientName} · ${s.dc}</div>
       <div class="srv-risk-row">
@@ -96,7 +89,7 @@ function renderServerGrid() {
         <div class="srv-risk-bar"><div class="srv-risk-fill" style="width:${s.riskPct}%; background:${getRiskColor(s.riskLevel)}"></div></div>
       </div>
     </div>
-  `).join('') || `<div style="padding:32px;color:var(--text-3);grid-column:1/-1;text-align:center;">No servers match this filter.</div>`;
+  `).join('') || '<div class="server-grid-empty">No servers match this filter.</div>';
 }
 
 function filterByRisk(level, btn) {
@@ -114,7 +107,7 @@ function selectServer(id) {
   renderServerGrid();
 
   const panel = document.getElementById('serverDetailPanel');
-  panel.style.display = 'block';
+  panel.hidden = false;
   document.getElementById('sdpTitle').textContent = s.name;
   document.getElementById('sdpMeta').textContent =
     `${s.clientName} · ${s.dc} · ${s.cpuCores} cores / ${s.ramGB}GB RAM · Last maintenance ${s.lastMaintenance}d ago · ${s.missing}% missing telemetry`;
@@ -157,11 +150,9 @@ function buildRecommendation(s) {
 
 function closeDetail() {
   State.selectedServerId = null;
-  document.getElementById('serverDetailPanel').style.display = 'none';
+  document.getElementById('serverDetailPanel').hidden = true;
   renderServerGrid();
 }
-
-// ─── Alerts view ────────────────────────────────────
 function renderAlerts() {
   const list = document.getElementById('alertsList');
   if (!list) return;
@@ -179,13 +170,12 @@ function renderAlerts() {
     </div>
   `).join('');
 }
-
-// ─── View switching ─────────────────────────────────
 function switchDashView(view, btn) {
   document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   ['overview', 'servers', 'alerts'].forEach(v => {
-    document.getElementById(`dv-${v}`).style.display = v === view ? 'block' : 'none';
+    const panel = document.getElementById(`dv-${v}`);
+    if (panel) panel.hidden = v !== view;
   });
   if (view === 'overview') {
     renderRiskDistChart();
@@ -201,15 +191,14 @@ function switchDashView(view, btn) {
     renderClientAccChart();
   }
 }
-
-// ─── Filters (client / DC dropdowns) ───────────────
 function applyFiltersFromUI() {
-  State.activeClient = document.getElementById('clientFilter').value;
-  State.activeDC = document.getElementById('dcFilter').value;
+  const clientFilter = document.getElementById('clientFilter');
+  const dcFilter = document.getElementById('dcFilter');
+  if (clientFilter) State.activeClient = clientFilter.value;
+  if (dcFilter) State.activeDC = dcFilter.value;
   applyFilters();
   renderServerGrid();
 }
-// ─── Live update loop ──────────────────────────────
 function updateLastUpdatedLabel() {
   const el = document.getElementById('lastUpdated');
   if (el) el.textContent = 'Updated just now';

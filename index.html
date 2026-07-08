@@ -1,608 +1,707 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PredictOps — Enterprise Server Failure Prediction</title>
-  <meta name="description" content="AI-powered predictive infrastructure monitoring across global data centers. Reduce downtime by 40%+ with ML-driven failure prediction." />
+  <meta name="description"
+    content="AI-powered predictive infrastructure monitoring across global data centers. Reduce downtime by 40%+ with ML-driven failure prediction." />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" defer></script>
 </head>
+
 <body>
 
-<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
-<nav class="navbar" id="navbar">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      <span class="logo-icon">⬡</span>
-      <span class="logo-text">PredictOps</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#features">Features</a></li>
-      <li><a href="#dashboard">Live Demo</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#performance">Performance</a></li>
-      <li><a href="#methodology">Methodology</a></li>
-    </ul>
-    <a href="#dashboard" class="btn btn-primary nav-cta">Open Dashboard</a>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- ═══════════════════════ HERO ═══════════════════════ -->
-<section class="hero" id="hero">
-  <div class="hero-bg-grid"></div>
-  <div class="hero-particles" id="particles"></div>
-  <div class="container hero-inner">
-    <div class="hero-badge">
-      <span class="pulse-dot"></span>
-      Live across 10 global clients · 80,000+ servers monitored
-    </div>
-    <h1 class="hero-title">
-      Predict server failures<br/>
-      <span class="gradient-text">before they happen</span>
-    </h1>
-    <p class="hero-sub">
-      A gradient-boosted ensemble (XGBoost + LightGBM) trained on multivariate
-      infrastructure telemetry — memory, disk I/O, network latency, error logs,
-      crash frequency, and maintenance history — to forecast failure risk with a
-      6.4-hour average lead time and 44% reduction in unplanned downtime.
-    </p>
-    <div class="hero-actions">
-      <a href="#dashboard" class="btn btn-primary btn-lg">
-        <span>View live dashboard</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  <!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">PredictOps</span>
       </a>
-      <a href="#methodology" class="btn btn-ghost btn-lg">Model methodology</a>
+      <ul class="nav-links" id="siteNavigation">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#dashboard">Live Demo</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#performance">Performance</a></li>
+        <li><a href="#methodology">Methodology</a></li>
+      </ul>
+      <a href="#dashboard" class="btn btn-primary nav-cta">Open Dashboard</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-controls="siteNavigation"
+        aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="hero-stat-val" data-target="44">0</span><span class="hero-stat-unit">%</span>
-        <span class="hero-stat-label">Downtime reduced</span>
-      </div>
-      <div class="hero-stat-divider"></div>
-      <div class="hero-stat">
-        <span class="hero-stat-val" data-target="94">0</span><span class="hero-stat-unit">%</span>
-        <span class="hero-stat-label">Prediction precision</span>
-      </div>
-      <div class="hero-stat-divider"></div>
-      <div class="hero-stat">
-        <span class="hero-stat-val" data-target="18">0</span><span class="hero-stat-unit">s</span>
-        <span class="hero-stat-label">Avg prediction time</span>
-        <span class="hero-stat-sub">under 2 seconds</span>
-      </div>
-      <div class="hero-stat-divider"></div>
-      <div class="hero-stat">
-        <span class="hero-stat-val" data-target="80">0</span><span class="hero-stat-unit">K+</span>
-        <span class="hero-stat-label">Servers tracked</span>
-      </div>
-    </div>
-  </div>
-  <div class="hero-scroll-hint">
-    <span>Scroll to explore</span>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-  </div>
-</section>
+  </nav>
 
-<!-- ═══════════════════════ FEATURES ═══════════════════════ -->
-<section class="section" id="features">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow">Capabilities</span>
-      <h2 class="section-title">Everything you need to eliminate surprises</h2>
-      <p class="section-sub">Built for infrastructure teams managing hundreds of servers across multiple clients and geographies.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card feature-card--large">
-        <div class="feature-icon feature-icon--blue">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
-        </div>
-        <h3>Real-time risk scoring</h3>
-        <p>Every server receives a live failure probability score updated every 60 seconds. Scores account for memory, disk I/O, network latency, and error log patterns simultaneously.</p>
-        <ul class="feature-list">
-          <li>4-tier risk classification (Critical / High / Medium / Low)</li>
-          <li>6.4-hour average warning before failure</li>
-          <li>Per-DC and per-client risk aggregation</li>
-        </ul>
+  <!-- ═══════════════════════ HERO ═══════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-particles" id="particles"></div>
+    <div class="container hero-inner">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Live across 10 global clients · 80,000+ servers monitored
       </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--purple">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-        </div>
-        <h3>Missing data resilience</h3>
-        <p>Handles up to 25% missing telemetry using MICE imputation — predictions stay accurate even when log pipelines degrade.</p>
+      <h1 class="hero-title">
+        Predict server failures<br />
+        <span class="gradient-text">before they happen</span>
+      </h1>
+      <p class="hero-sub">
+        A gradient-boosted ensemble (XGBoost + LightGBM) trained on multivariate
+        infrastructure telemetry — memory, disk I/O, network latency, error logs,
+        crash frequency, and maintenance history — to forecast failure risk with a
+        6.4-hour average lead time and 44% reduction in unplanned downtime.
+      </p>
+      <div class="hero-actions">
+        <a href="#dashboard" class="btn btn-primary btn-lg">
+          <span>View live dashboard</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a href="#methodology" class="btn btn-ghost btn-lg">Model methodology</a>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--green">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-val" data-target="44">0</span><span class="hero-stat-unit">%</span>
+          <span class="hero-stat-label">Downtime reduced</span>
         </div>
-        <h3>Auto-adapts to new infra</h3>
-        <p>Online learning calibrates the model to each client's unique workload patterns within 72 hours of onboarding. No manual tuning required.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--orange">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-val" data-target="94">0</span><span class="hero-stat-unit">%</span>
+          <span class="hero-stat-label">Prediction precision</span>
         </div>
-        <h3>Multi-client isolation</h3>
-        <p>Fully tenant-isolated models and dashboards. Each client's data never influences another client's predictions.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--red">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-val" data-target="18">0</span><span class="hero-stat-unit">s</span>
+          <span class="hero-stat-label">Avg prediction time</span>
+          <span class="hero-stat-sub">under 2 seconds</span>
         </div>
-        <h3>Intelligent alerting</h3>
-        <p>Priority-ranked alerts deduplicated across data centers. Suppresses noise during planned maintenance windows automatically.</p>
-      </div>
-      <div class="feature-card feature-card--accent">
-        <div class="feature-icon feature-icon--dark">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <h3>Sub-2s prediction latency</h3>
-        <p>Full ensemble inference (XGBoost + LightGBM) completes in under 2 seconds per server at P50. Hard SLA of 5 seconds at P99.</p>
-        <div class="latency-bar">
-          <div class="latency-fill" style="width:36%">
-            <span>1.8s avg</span>
-          </div>
-          <span class="latency-limit">5s SLA</span>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-val" data-target="80">0</span><span class="hero-stat-unit">K+</span>
+          <span class="hero-stat-label">Servers tracked</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════ LIVE DASHBOARD ═══════════════════════ -->
-<section class="section section--dark" id="dashboard">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow">Live demo</span>
-      <h2 class="section-title">Interactive monitoring dashboard</h2>
-      <p class="section-sub">Simulated live data — updates every 8 seconds to reflect real telemetry behaviour.</p>
+    <div class="hero-scroll-hint">
+      <span>Scroll to explore</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7" />
+      </svg>
     </div>
+  </section>
 
-    <!-- Dashboard Shell -->
-    <div class="dashboard-shell">
-      <!-- Dashboard Topbar -->
-      <div class="dash-topbar">
-        <div class="dash-topbar-left">
-          <span class="dash-live-dot"></span>
-          <span class="dash-live-label">Live feed</span>
-          <span class="dash-updated" id="lastUpdated">Just updated</span>
+  <!-- ═══════════════════════ FEATURES ═══════════════════════ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Capabilities</span>
+        <h2 class="section-title">Everything you need to eliminate surprises</h2>
+        <p class="section-sub">Built for infrastructure teams managing hundreds of servers across multiple clients and
+          geographies.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card feature-card--large">
+          <div class="feature-icon feature-icon--blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path
+                d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+            </svg>
+          </div>
+          <h3>Real-time risk scoring</h3>
+          <p>Every server receives a live failure probability score updated every 60 seconds. Scores account for memory,
+            disk I/O, network latency, and error log patterns simultaneously.</p>
+          <ul class="feature-list">
+            <li>4-tier risk classification (Critical / High / Medium / Low)</li>
+            <li>6.4-hour average warning before failure</li>
+            <li>Per-DC and per-client risk aggregation</li>
+          </ul>
         </div>
-        <div class="dash-topbar-right">
-          <select id="clientFilter" class="dash-select" onchange="applyFiltersFromUI()">
-            <option value="all">All clients</option>
-            <option value="0">Axiom Corp</option>
-            <option value="1">NexaCloud</option>
-            <option value="2">Veriton</option>
-            <option value="3">DataSphere</option>
-          </select>
-          <select id="dcFilter" class="dash-select" onchange="applyFiltersFromUI()">
-            <option value="all">All data centers</option>
-            <option>US-East-1</option>
-            <option>US-West-2</option>
-            <option>EU-Frankfurt</option>
-            <option>AP-Singapore</option>
-            <option>AP-Tokyo</option>
-            <option>US-Central</option>
-          </select>
-          <div class="dash-view-tabs">
-            <button class="dash-tab active" onclick="switchDashView('overview', this)">Overview</button>
-            <button class="dash-tab" onclick="switchDashView('servers', this)">Servers</button>
-            <button class="dash-tab" onclick="switchDashView('alerts', this)">Alerts</button>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon--purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+            </svg>
+          </div>
+          <h3>Missing data resilience</h3>
+          <p>Handles up to 25% missing telemetry using MICE imputation — predictions stay accurate even when log
+            pipelines degrade.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon--green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </div>
+          <h3>Auto-adapts to new infra</h3>
+          <p>Online learning calibrates the model to each client's unique workload patterns within 72 hours of
+            onboarding. No manual tuning required.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon--orange">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <path d="M8 21h8M12 17v4" />
+            </svg>
+          </div>
+          <h3>Multi-client isolation</h3>
+          <p>Fully tenant-isolated models and dashboards. Each client's data never influences another client's
+            predictions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon--red">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
+            </svg>
+          </div>
+          <h3>Intelligent alerting</h3>
+          <p>Priority-ranked alerts deduplicated across data centers. Suppresses noise during planned maintenance
+            windows automatically.</p>
+        </div>
+        <div class="feature-card feature-card--accent">
+          <div class="feature-icon feature-icon--dark">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          </div>
+          <h3>Sub-2s prediction latency</h3>
+          <p>Full ensemble inference (XGBoost + LightGBM) completes in under 2 seconds per server at P50. Hard SLA of 5
+            seconds at P99.</p>
+          <div class="latency-bar">
+            <div class="latency-fill latency-fill--36">
+              <span>1.8s avg</span>
+            </div>
+            <span class="latency-limit">5s SLA</span>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- KPI Strip -->
-      <div class="kpi-strip" id="kpiStrip"></div>
-
-      <!-- Overview View -->
-      <div id="dv-overview" class="dash-view">
-        <div class="dash-charts-row">
-          <div class="dash-chart-card">
-            <div class="dash-chart-header">
-              <span class="dash-chart-title">Risk distribution</span>
-              <span class="dash-chart-sub" id="riskTotal"></span>
-            </div>
-            <div class="chart-wrap"><canvas id="riskDistChart"></canvas></div>
-          </div>
-          <div class="dash-chart-card">
-            <div class="dash-chart-header">
-              <span class="dash-chart-title">Downtime reduction</span>
-              <span class="dash-chart-sub">12-month projection</span>
-            </div>
-            <div class="chart-wrap"><canvas id="downtimeChart"></canvas></div>
-          </div>
-          <div class="dash-chart-card">
-            <div class="dash-chart-header">
-              <span class="dash-chart-title">Prediction latency</span>
-              <span class="dash-chart-sub">P50 / P95 / P99</span>
-            </div>
-            <div class="chart-wrap"><canvas id="latencyChart"></canvas></div>
-          </div>
-        </div>
-        <div class="dash-bottom-row">
-          <div class="dash-chart-card dash-chart-card--wide">
-            <div class="dash-chart-header">
-              <span class="dash-chart-title">Top 10 critical servers</span>
-              <span class="dash-chart-sub">Sorted by risk score</span>
-            </div>
-            <div class="server-table-wrap">
-              <table class="server-table" id="topServersTable">
-                <thead><tr>
-                  <th>Server</th><th>Client</th><th>Data center</th>
-                  <th>Risk score</th><th>Memory</th><th>Disk I/O</th>
-                  <th>Latency</th><th>Status</th>
-                </tr></thead>
-                <tbody id="topServersTbody"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="dash-chart-card">
-            <div class="dash-chart-header">
-              <span class="dash-chart-title">DC risk heatmap</span>
-            </div>
-            <div id="dcHeatmap" class="dc-heatmap"></div>
-          </div>
-        </div>
+  <!-- ═══════════════════════ LIVE DASHBOARD ═══════════════════════ -->
+  <section class="section section--dark" id="dashboard">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Live demo</span>
+        <h2 class="section-title">Interactive monitoring dashboard</h2>
+        <p class="section-sub">Simulated live data — updates every 8 seconds to reflect real telemetry behaviour.</p>
       </div>
 
-      <!-- Servers View -->
-      <div id="dv-servers" class="dash-view" style="display:none">
-        <div class="servers-filter-row">
-          <span class="filter-label">Filter by risk:</span>
-          <button class="risk-filter-btn active" data-risk="all" onclick="filterByRisk('all',this)">All</button>
-          <button class="risk-filter-btn crit" data-risk="critical" onclick="filterByRisk('critical',this)">Critical</button>
-          <button class="risk-filter-btn high" data-risk="high" onclick="filterByRisk('high',this)">High</button>
-          <button class="risk-filter-btn med" data-risk="medium" onclick="filterByRisk('medium',this)">Medium</button>
-          <button class="risk-filter-btn low" data-risk="low" onclick="filterByRisk('low',this)">Low</button>
-          <input type="text" class="server-search" id="serverSearch" placeholder="Search server ID..." oninput="renderServerGrid()" />
-        </div>
-        <div class="server-grid" id="serverGrid"></div>
-        <!-- Server Detail Panel -->
-        <div class="server-detail-panel" id="serverDetailPanel" style="display:none">
-          <div class="sdp-header">
-            <div class="sdp-title-row">
-              <h3 id="sdpTitle"></h3>
-              <button class="sdp-close" onclick="closeDetail()">✕</button>
-            </div>
-            <div class="sdp-meta" id="sdpMeta"></div>
+      <!-- Dashboard Shell -->
+      <div class="dashboard-shell">
+        <!-- Dashboard Topbar -->
+        <div class="dash-topbar">
+          <div class="dash-topbar-left">
+            <span class="dash-live-dot"></span>
+            <span class="dash-live-label">Live feed</span>
+            <span class="dash-updated" id="lastUpdated">Just updated</span>
           </div>
-          <div class="sdp-metrics" id="sdpMetrics"></div>
-          <div class="sdp-recommendation" id="sdpRec"></div>
-          <div class="sdp-sparklines" id="sdpSparklines"></div>
+          <div class="dash-topbar-right">
+            <select id="clientFilter" class="dash-select" onchange="applyFiltersFromUI()" title="Filter by client"
+              aria-label="Filter by client">
+              <option value="all">All clients</option>
+              <option value="0">Axiom Corp</option>
+              <option value="1">NexaCloud</option>
+              <option value="2">Veriton</option>
+              <option value="3">DataSphere</option>
+            </select>
+            <select id="dcFilter" class="dash-select" onchange="applyFiltersFromUI()" title="Filter by data center"
+              aria-label="Filter by data center">
+              <option value="all">All data centers</option>
+              <option>US-East-1</option>
+              <option>US-West-2</option>
+              <option>EU-Frankfurt</option>
+              <option>AP-Singapore</option>
+              <option>AP-Tokyo</option>
+              <option>US-Central</option>
+            </select>
+            <div class="dash-view-tabs">
+              <button class="dash-tab active" onclick="switchDashView('overview', this)">Overview</button>
+              <button class="dash-tab" onclick="switchDashView('servers', this)">Servers</button>
+              <button class="dash-tab" onclick="switchDashView('alerts', this)">Alerts</button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Alerts View -->
-      <div id="dv-alerts" class="dash-view" style="display:none">
-        <div class="alerts-layout">
-          <div class="alerts-feed-col">
-            <div class="alerts-header">
-              <span class="alerts-title">Active alerts</span>
-              <span class="alerts-count" id="alertsCount"></span>
-            </div>
-            <div class="alerts-list" id="alertsList"></div>
-          </div>
-          <div class="alerts-chart-col">
+        <!-- KPI Strip -->
+        <div class="kpi-strip" id="kpiStrip"></div>
+
+        <!-- Overview View -->
+        <div id="dv-overview" class="dash-view">
+          <div class="dash-charts-row">
             <div class="dash-chart-card">
-              <div class="dash-chart-header"><span class="dash-chart-title">Alert volume (24h)</span></div>
-              <div class="chart-wrap"><canvas id="alertVolumeChart"></canvas></div>
+              <div class="dash-chart-header">
+                <span class="dash-chart-title">Risk distribution</span>
+                <span class="dash-chart-sub" id="riskTotal"></span>
+              </div>
+              <div class="chart-wrap"><canvas id="riskDistChart"></canvas></div>
             </div>
-            <div class="dash-chart-card" style="margin-top:12px">
-              <div class="dash-chart-header"><span class="dash-chart-title">Model accuracy by client</span></div>
-              <div class="chart-wrap"><canvas id="clientAccChart"></canvas></div>
+            <div class="dash-chart-card">
+              <div class="dash-chart-header">
+                <span class="dash-chart-title">Downtime reduction</span>
+                <span class="dash-chart-sub">12-month projection</span>
+              </div>
+              <div class="chart-wrap"><canvas id="downtimeChart"></canvas></div>
+            </div>
+            <div class="dash-chart-card">
+              <div class="dash-chart-header">
+                <span class="dash-chart-title">Prediction latency</span>
+                <span class="dash-chart-sub">P50 / P95 / P99</span>
+              </div>
+              <div class="chart-wrap"><canvas id="latencyChart"></canvas></div>
+            </div>
+          </div>
+          <div class="dash-bottom-row">
+            <div class="dash-chart-card dash-chart-card--wide">
+              <div class="dash-chart-header">
+                <span class="dash-chart-title">Top 10 critical servers</span>
+                <span class="dash-chart-sub">Sorted by risk score</span>
+              </div>
+              <div class="server-table-wrap">
+                <table class="server-table" id="topServersTable">
+                  <thead>
+                    <tr>
+                      <th>Server</th>
+                      <th>Client</th>
+                      <th>Data center</th>
+                      <th>Risk score</th>
+                      <th>Memory</th>
+                      <th>Disk I/O</th>
+                      <th>Latency</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="topServersTbody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="dash-chart-card">
+              <div class="dash-chart-header">
+                <span class="dash-chart-title">DC risk heatmap</span>
+              </div>
+              <div id="dcHeatmap" class="dc-heatmap"></div>
             </div>
           </div>
         </div>
-      </div>
 
-    </div><!-- /dashboard-shell -->
-  </div>
-</section>
+        <!-- Servers View -->
+        <div id="dv-servers" class="dash-view" hidden>
+          <div class="servers-filter-row">
+            <span class="filter-label">Filter by risk:</span>
+            <button class="risk-filter-btn active" data-risk="all" onclick="filterByRisk('all',this)">All</button>
+            <button class="risk-filter-btn crit" data-risk="critical"
+              onclick="filterByRisk('critical',this)">Critical</button>
+            <button class="risk-filter-btn high" data-risk="high" onclick="filterByRisk('high',this)">High</button>
+            <button class="risk-filter-btn med" data-risk="medium" onclick="filterByRisk('medium',this)">Medium</button>
+            <button class="risk-filter-btn low" data-risk="low" onclick="filterByRisk('low',this)">Low</button>
+            <input type="text" class="server-search" id="serverSearch" placeholder="Search server ID..."
+              aria-label="Search server ID" oninput="renderServerGrid()" />
+          </div>
+          <div class="server-grid" id="serverGrid"></div>
+          <!-- Server Detail Panel -->
+          <div class="server-detail-panel" id="serverDetailPanel" hidden>
+            <div class="sdp-header">
+              <div class="sdp-title-row">
+                <h3 id="sdpTitle"></h3>
+                <button class="sdp-close" onclick="closeDetail()">✕</button>
+              </div>
+              <div class="sdp-meta" id="sdpMeta"></div>
+            </div>
+            <div class="sdp-metrics" id="sdpMetrics"></div>
+            <div class="sdp-recommendation" id="sdpRec"></div>
+            <div class="sdp-sparklines" id="sdpSparklines"></div>
+          </div>
+        </div>
 
-<!-- ═══════════════════════ ARCHITECTURE ═══════════════════════ -->
-<section class="section" id="architecture">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow">System design</span>
-      <h2 class="section-title">Built for scale from day one</h2>
-      <p class="section-sub">A streaming ML pipeline that ingests heterogeneous telemetry, handles missing data gracefully, and delivers sub-2-second predictions.</p>
-    </div>
-    <div class="arch-diagram">
-      <div class="arch-stage" data-aos>
-        <div class="arch-stage-label">Ingest</div>
-        <div class="arch-nodes">
-          <div class="arch-node">
-            <div class="arch-node-icon an-blue">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <!-- Alerts View -->
+        <div id="dv-alerts" class="dash-view" hidden>
+          <div class="alerts-layout">
+            <div class="alerts-feed-col">
+              <div class="alerts-header">
+                <span class="alerts-title">Active alerts</span>
+                <span class="alerts-count" id="alertsCount"></span>
+              </div>
+              <div class="alerts-list" id="alertsList"></div>
             </div>
-            <span>Server telemetry</span>
-            <small>5-sec intervals</small>
-          </div>
-          <div class="arch-node">
-            <div class="arch-node-icon an-blue">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <div class="alerts-chart-col">
+              <div class="dash-chart-card">
+                <div class="dash-chart-header"><span class="dash-chart-title">Alert volume (24h)</span></div>
+                <div class="chart-wrap"><canvas id="alertVolumeChart"></canvas></div>
+              </div>
+              <div class="dash-chart-card dash-chart-card--stacked">
+                <div class="dash-chart-header"><span class="dash-chart-title">Model accuracy by client</span></div>
+                <div class="chart-wrap"><canvas id="clientAccChart"></canvas></div>
+              </div>
             </div>
-            <span>Error + crash logs</span>
-            <small>Streaming</small>
-          </div>
-          <div class="arch-node">
-            <div class="arch-node-icon an-blue">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-            </div>
-            <span>Maintenance records</span>
-            <small>Batch + history</small>
           </div>
         </div>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-stage" data-aos>
-        <div class="arch-stage-label">Process</div>
-        <div class="arch-nodes">
-          <div class="arch-node arch-node--highlight">
-            <div class="arch-node-icon an-purple">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
-            <span>Kafka streaming</span>
-            <small>Real-time pipeline</small>
-          </div>
-          <div class="arch-node arch-node--highlight">
-            <div class="arch-node-icon an-purple">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20"/></svg>
-            </div>
-            <span>Spark preprocessing</span>
-            <small>MICE imputation</small>
-          </div>
-          <div class="arch-node arch-node--highlight">
-            <div class="arch-node-icon an-purple">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-            </div>
-            <span>Feature store</span>
-            <small>Redis + S3</small>
-          </div>
-        </div>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-stage" data-aos>
-        <div class="arch-stage-label">Predict</div>
-        <div class="arch-nodes">
-          <div class="arch-node arch-node--ml">
-            <div class="arch-node-icon an-green">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <span>XGBoost</span>
-            <small>Primary model</small>
-          </div>
-          <div class="arch-node arch-node--ml">
-            <div class="arch-node-icon an-green">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <span>LightGBM</span>
-            <small>Ensemble partner</small>
-          </div>
-          <div class="arch-node arch-node--ml">
-            <div class="arch-node-icon an-green">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M6.343 6.343a8 8 0 000 11.314M17.657 6.343a8 8 0 010 11.314"/></svg>
-            </div>
-            <span>Online learning</span>
-            <small>Auto-calibrates</small>
-          </div>
-        </div>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-stage" data-aos>
-        <div class="arch-stage-label">Act</div>
-        <div class="arch-nodes">
-          <div class="arch-node">
-            <div class="arch-node-icon an-red">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
-            </div>
-            <span>Priority alerts</span>
-            <small>PagerDuty / Slack</small>
-          </div>
-          <div class="arch-node">
-            <div class="arch-node-icon an-red">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-            </div>
-            <span>Dashboard UI</span>
-            <small>This interface</small>
-          </div>
-          <div class="arch-node">
-            <div class="arch-node-icon an-red">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <span>Auto-remediation</span>
-            <small>Runbook triggers</small>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Missing data strategy -->
-    <div class="missing-data-section">
-      <h3 class="mds-title">Missing data strategy</h3>
-      <div class="mds-grid">
-        <div class="mds-card mds-card--green">
-          <div class="mds-pct">0–10%</div>
-          <div class="mds-method">Forward-fill</div>
-          <div class="mds-desc">Last known value carried forward. Zero performance impact.</div>
-        </div>
-        <div class="mds-card mds-card--yellow">
-          <div class="mds-pct">10–25%</div>
-          <div class="mds-method">MICE Imputation</div>
-          <div class="mds-desc">Multiple Imputation by Chained Equations preserves feature correlations.</div>
-        </div>
-        <div class="mds-card mds-card--orange">
-          <div class="mds-pct">&gt;25%</div>
-          <div class="mds-method">Degrade + flag</div>
-          <div class="mds-desc">Risk score bumped +8%. Alert generated. Human review triggered.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ═══════════════════════ PERFORMANCE ═══════════════════════ -->
-<section class="section section--dark" id="performance">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow">Model performance</span>
-      <h2 class="section-title">Numbers that beat the brief</h2>
-      <p class="section-sub">Evaluated on 6 months of holdout data across all 10 client environments.</p>
+      </div><!-- /dashboard-shell -->
     </div>
-    <div class="perf-grid">
-      <div class="perf-card">
-        <div class="perf-ring" data-pct="94">
-          <svg viewBox="0 0 120 120">
-            <circle class="pr-track" cx="60" cy="60" r="52"/>
-            <circle class="pr-fill pr-blue" cx="60" cy="60" r="52" data-pct="94"/>
-          </svg>
-          <div class="perf-ring-center"><span class="perf-big">94.2</span><span class="perf-unit">%</span></div>
-        </div>
-        <div class="perf-name">Precision</div>
-        <div class="perf-desc">Of predicted failures, 94.2% were genuine</div>
-      </div>
-      <div class="perf-card">
-        <div class="perf-ring" data-pct="92">
-          <svg viewBox="0 0 120 120">
-            <circle class="pr-track" cx="60" cy="60" r="52"/>
-            <circle class="pr-fill pr-green" cx="60" cy="60" r="52" data-pct="92"/>
-          </svg>
-          <div class="perf-ring-center"><span class="perf-big">91.7</span><span class="perf-unit">%</span></div>
-        </div>
-        <div class="perf-name">Recall</div>
-        <div class="perf-desc">Caught 91.7% of all actual failure events</div>
-      </div>
-      <div class="perf-card">
-        <div class="perf-ring" data-pct="93">
-          <svg viewBox="0 0 120 120">
-            <circle class="pr-track" cx="60" cy="60" r="52"/>
-            <circle class="pr-fill pr-purple" cx="60" cy="60" r="52" data-pct="93"/>
-          </svg>
-          <div class="perf-ring-center"><span class="perf-big">0.929</span></div>
-        </div>
-        <div class="perf-name">F1 Score</div>
-        <div class="perf-desc">Harmonic mean of precision and recall</div>
-      </div>
-      <div class="perf-card">
-        <div class="perf-ring" data-pct="97">
-          <svg viewBox="0 0 120 120">
-            <circle class="pr-track" cx="60" cy="60" r="52"/>
-            <circle class="pr-fill pr-orange" cx="60" cy="60" r="52" data-pct="97"/>
-          </svg>
-          <div class="perf-ring-center"><span class="perf-big">0.974</span></div>
-        </div>
-        <div class="perf-name">ROC-AUC</div>
-        <div class="perf-desc">Near-perfect discriminative ability</div>
-      </div>
-    </div>
-    <div class="perf-charts-row">
-      <div class="perf-chart-card">
-        <h3>Feature importance</h3>
-        <p class="perf-chart-sub">Relative contribution of each input signal to the ensemble model</p>
-        <div class="chart-wrap chart-wrap--tall"><canvas id="featureChart"></canvas></div>
-      </div>
-      <div class="perf-chart-card">
-        <h3>Client adaptation curve</h3>
-        <p class="perf-chart-sub">Model accuracy during 72-hour warm-up for a new client environment</p>
-        <div class="chart-wrap chart-wrap--tall"><canvas id="adaptChart"></canvas></div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══════════════════════ METHODOLOGY (DS/AI domain content) ═══════════════════════ -->
-<section class="section" id="methodology">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-eyebrow">Data science approach</span>
-      <h2 class="section-title">How the model was actually built</h2>
-      <p class="section-sub">This dashboard visualizes the output of a real, reproducible ML pipeline. The training code lives in <code>/ml</code> alongside this site.</p>
+  <!-- ═══════════════════════ ARCHITECTURE ═══════════════════════ -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">System design</span>
+        <h2 class="section-title">Built for scale from day one</h2>
+        <p class="section-sub">A streaming ML pipeline that ingests heterogeneous telemetry, handles missing data
+          gracefully, and delivers sub-2-second predictions.</p>
+      </div>
+      <div class="arch-diagram">
+        <div class="arch-stage" data-aos>
+          <div class="arch-stage-label">Ingest</div>
+          <div class="arch-nodes">
+            <div class="arch-node">
+              <div class="arch-node-icon an-blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <ellipse cx="12" cy="5" rx="9" ry="3" />
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                </svg>
+              </div>
+              <span>Server telemetry</span>
+              <small>5-sec intervals</small>
+            </div>
+            <div class="arch-node">
+              <div class="arch-node-icon an-blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+              </div>
+              <span>Error + crash logs</span>
+              <small>Streaming</small>
+            </div>
+            <div class="arch-node">
+              <div class="arch-node-icon an-blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="2" y="2" width="20" height="8" rx="2" />
+                  <rect x="2" y="14" width="20" height="8" rx="2" />
+                  <line x1="6" y1="6" x2="6.01" y2="6" />
+                  <line x1="6" y1="18" x2="6.01" y2="18" />
+                </svg>
+              </div>
+              <span>Maintenance records</span>
+              <small>Batch + history</small>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-stage" data-aos>
+          <div class="arch-stage-label">Process</div>
+          <div class="arch-nodes">
+            <div class="arch-node arch-node--highlight">
+              <div class="arch-node-icon an-purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+              </div>
+              <span>Kafka streaming</span>
+              <small>Real-time pipeline</small>
+            </div>
+            <div class="arch-node arch-node--highlight">
+              <div class="arch-node-icon an-purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 010 20" />
+                </svg>
+              </div>
+              <span>Spark preprocessing</span>
+              <small>MICE imputation</small>
+            </div>
+            <div class="arch-node arch-node--highlight">
+              <div class="arch-node-icon an-purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path
+                    d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
+                </svg>
+              </div>
+              <span>Feature store</span>
+              <small>Redis + S3</small>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-stage" data-aos>
+          <div class="arch-stage-label">Predict</div>
+          <div class="arch-nodes">
+            <div class="arch-node arch-node--ml">
+              <div class="arch-node-icon an-green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+              </div>
+              <span>XGBoost</span>
+              <small>Primary model</small>
+            </div>
+            <div class="arch-node arch-node--ml">
+              <div class="arch-node-icon an-green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+              </div>
+              <span>LightGBM</span>
+              <small>Ensemble partner</small>
+            </div>
+            <div class="arch-node arch-node--ml">
+              <div class="arch-node-icon an-green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M6.343 6.343a8 8 0 000 11.314M17.657 6.343a8 8 0 010 11.314" />
+                </svg>
+              </div>
+              <span>Online learning</span>
+              <small>Auto-calibrates</small>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-stage" data-aos>
+          <div class="arch-stage-label">Act</div>
+          <div class="arch-nodes">
+            <div class="arch-node">
+              <div class="arch-node-icon an-red">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
+                </svg>
+              </div>
+              <span>Priority alerts</span>
+              <small>PagerDuty / Slack</small>
+            </div>
+            <div class="arch-node">
+              <div class="arch-node-icon an-red">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M3 9h18M9 21V9" />
+                </svg>
+              </div>
+              <span>Dashboard UI</span>
+              <small>This interface</small>
+            </div>
+            <div class="arch-node">
+              <div class="arch-node-icon an-red">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <span>Auto-remediation</span>
+              <small>Runbook triggers</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Missing data strategy -->
+      <div class="missing-data-section">
+        <h3 class="mds-title">Missing data strategy</h3>
+        <div class="mds-grid">
+          <div class="mds-card mds-card--green">
+            <div class="mds-pct">0–10%</div>
+            <div class="mds-method">Forward-fill</div>
+            <div class="mds-desc">Last known value carried forward. Zero performance impact.</div>
+          </div>
+          <div class="mds-card mds-card--yellow">
+            <div class="mds-pct">10–25%</div>
+            <div class="mds-method">MICE Imputation</div>
+            <div class="mds-desc">Multiple Imputation by Chained Equations preserves feature correlations.</div>
+          </div>
+          <div class="mds-card mds-card--orange">
+            <div class="mds-pct">&gt;25%</div>
+            <div class="mds-method">Degrade + flag</div>
+            <div class="mds-desc">Risk score bumped +8%. Alert generated. Human review triggered.</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="features-grid">
-      <div class="feature-card feature-card--large">
-        <div class="feature-icon feature-icon--blue">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
-        </div>
-        <h3>Problem framing</h3>
-        <p>Binary classification per server per time window: will this server experience a failure event in the next 24 hours? Labels are derived from historical incident tickets; features are aggregated from rolling windows (1h / 6h / 24h) over memory, disk I/O, network latency, error rate, and crash counts.</p>
-        <ul class="feature-list">
-          <li>Target: <code>failure_within_24h</code> (binary)</li>
-          <li>Grain: one row per server per hour</li>
-          <li>Class imbalance handled via scale_pos_weight + focal-loss variant</li>
-        </ul>
+  </section>
+  <section class="section section--dark" id="performance">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Model performance</span>
+        <h2 class="section-title">Numbers that beat the brief</h2>
+        <p class="section-sub">Evaluated on 6 months of holdout data across all 10 client environments.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--purple">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+      <div class="perf-grid">
+        <div class="perf-card">
+          <div class="perf-ring" data-pct="94">
+            <svg viewBox="0 0 120 120">
+              <circle class="pr-track" cx="60" cy="60" r="52" />
+              <circle class="pr-fill pr-blue" cx="60" cy="60" r="52" data-pct="94" />
+            </svg>
+            <div class="perf-ring-center"><span class="perf-big">94.2</span><span class="perf-unit">%</span></div>
+          </div>
+          <div class="perf-name">Precision</div>
+          <div class="perf-desc">Of predicted failures, 94.2% were genuine</div>
         </div>
-        <h3>Feature engineering</h3>
-        <p>Rolling means, std deviations, and rate-of-change (slope) per metric, plus categorical encodings for client and data center. See <code>ml/features.py</code>.</p>
+        <div class="perf-card">
+          <div class="perf-ring" data-pct="92">
+            <svg viewBox="0 0 120 120">
+              <circle class="pr-track" cx="60" cy="60" r="52" />
+              <circle class="pr-fill pr-green" cx="60" cy="60" r="52" data-pct="92" />
+            </svg>
+            <div class="perf-ring-center"><span class="perf-big">91.7</span><span class="perf-unit">%</span></div>
+          </div>
+          <div class="perf-name">Recall</div>
+          <div class="perf-desc">Caught 91.7% of all actual failure events</div>
+        </div>
+        <div class="perf-card">
+          <div class="perf-ring" data-pct="93">
+            <svg viewBox="0 0 120 120">
+              <circle class="pr-track" cx="60" cy="60" r="52" />
+              <circle class="pr-fill pr-purple" cx="60" cy="60" r="52" data-pct="93" />
+            </svg>
+            <div class="perf-ring-center"><span class="perf-big">0.929</span></div>
+          </div>
+          <div class="perf-name">F1 Score</div>
+          <div class="perf-desc">Harmonic mean of precision and recall</div>
+        </div>
+        <div class="perf-card">
+          <div class="perf-ring" data-pct="97">
+            <svg viewBox="0 0 120 120">
+              <circle class="pr-track" cx="60" cy="60" r="52" />
+              <circle class="pr-fill pr-orange" cx="60" cy="60" r="52" data-pct="97" />
+            </svg>
+            <div class="perf-ring-center"><span class="perf-big">0.974</span></div>
+          </div>
+          <div class="perf-name">ROC-AUC</div>
+          <div class="perf-desc">Near-perfect discriminative ability</div>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--green">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+      <div class="perf-charts-row">
+        <div class="perf-chart-card">
+          <h3>Feature importance</h3>
+          <p class="perf-chart-sub">Relative contribution of each input signal to the ensemble model</p>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="featureChart"></canvas></div>
         </div>
-        <h3>Validation strategy</h3>
-        <p>Time-based split (train on months 1–5, test on month 6) plus per-client leave-one-out validation to check generalization across environments — not a random shuffle split, which would leak temporal information.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--orange">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <div class="perf-chart-card">
+          <h3>Client adaptation curve</h3>
+          <p class="perf-chart-sub">Model accuracy during 72-hour warm-up for a new client environment</p>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="adaptChart"></canvas></div>
         </div>
-        <h3>Model choice</h3>
-        <p>XGBoost and LightGBM ensembled by weighted averaging. Gradient-boosted trees were chosen over deep learning for interpretability (SHAP values), fast inference (&lt;2s/server), and strong performance on tabular, heterogeneous telemetry.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--red">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
-        </div>
-        <h3>Honesty about the demo</h3>
-        <p>The live dashboard above runs on client-side synthetic data (<code>js/data.js</code>) so it works instantly on GitHub Pages with zero backend. The <code>/ml</code> folder contains the actual trainable model — run it locally to reproduce the metrics shown, or swap in real telemetry.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  <section class="section" id="methodology">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Data science approach</span>
+        <h2 class="section-title">How the model was actually built</h2>
+        <p class="section-sub">This dashboard visualizes the output of a real, reproducible ML pipeline. The training
+          code lives in <code>/ml</code> alongside this site.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card feature-card--large">
+          <div class="feature-icon feature-icon--blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 3v18h18" />
+              <path d="M18 17V9M13 17V5M8 17v-3" />
+            </svg>
+          </div>
+          <h3>Problem framing</h3>
+          <p>Binary classification per server per time window: will this server experience a failure event in the next
+            24 hours? Labels are derived from historical incident tickets; features are aggregated from rolling windows
+            (1h / 6h / 24h) over memory, disk I/O, network latency, error rate, and crash counts.</p>
+          <ul class="feature-list">
+            <li>Target: <code>failure_within_24h</code> (binary)</li>
+            <li>Grain: one row per server per hour</li>
+            <li>Class imbalance handled via scale_pos_weight + focal-loss variant</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon--purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 20V10M18 20V4M6 20v-4" />
+            </svg>
+          </div>
+          <h3>Feature engineering</h3>
+          <p>Rolling means, std deviations, and rate-of-change (slope) per metric, plus categorical encodings for client
+            and data center. See <code>ml/features.py</code>.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon--green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path
+                d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+            </svg>
+          </div>
+          <h3>Validation strategy</h3>
+          <p>Time-based split (train on months 1–5, test on month 6) plus per-client leave-one-out validation to check
+            generalization across environments — not a random shuffle split, which would leak temporal information.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon--orange">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </div>
+          <h3>Model choice</h3>
+          <p>XGBoost and LightGBM ensembled by weighted averaging. Gradient-boosted trees were chosen over deep learning
+            for interpretability (SHAP values), fast inference (&lt;2s/server), and strong performance on tabular,
+            heterogeneous telemetry.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon--red">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
+            </svg>
+          </div>
+          <h3>Honesty about the demo</h3>
+          <p>The live dashboard above runs on client-side synthetic data (<code>js/data.js</code>) so it works instantly
+            on GitHub Pages with zero backend. The <code>/ml</code> folder contains the actual trainable model — run it
+            locally to reproduce the metrics shown, or swap in real telemetry.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">PredictOps</span>
+        <p class="footer-tagline">Enterprise server failure prediction at scale — a data science &amp; AI internship
+          project.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <span class="footer-col-title">Project</span>
+          <a href="#features">Features</a>
+          <a href="#dashboard">Live demo</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#performance">Performance</a>
+          <a href="#methodology">Methodology</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Stack</span>
+          <a href="#">Python · scikit-learn</a>
+          <a href="#">XGBoost + LightGBM</a>
+          <a href="#">Pandas / NumPy</a>
+          <a href="#">Chart.js (visualization layer)</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Data Science &amp; AI Internship Project · PredictOps 2026</span>
+    </div>
+  </footer>
 
-<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <span class="logo-icon">⬡</span>
-      <span class="logo-text">PredictOps</span>
-      <p class="footer-tagline">Enterprise server failure prediction at scale — a data science &amp; AI internship project.</p>
-    </div>
-    <div class="footer-links">
-      <div class="footer-col">
-        <span class="footer-col-title">Project</span>
-        <a href="#features">Features</a>
-        <a href="#dashboard">Live demo</a>
-        <a href="#architecture">Architecture</a>
-        <a href="#performance">Performance</a>
-        <a href="#methodology">Methodology</a>
-      </div>
-      <div class="footer-col">
-        <span class="footer-col-title">Stack</span>
-        <a href="#">Python · scikit-learn</a>
-        <a href="#">XGBoost + LightGBM</a>
-        <a href="#">Pandas / NumPy</a>
-        <a href="#">Chart.js (visualization layer)</a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>Data Science &amp; AI Internship Project · PredictOps 2026</span>
-  </div>
-</footer>
-
-<script src="js/data.js"></script>
-<script src="js/charts.js"></script>
-<script src="js/dashboard.js"></script>
-<script src="js/main.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
 </body>
+
 </html>

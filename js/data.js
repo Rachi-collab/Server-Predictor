@@ -1,7 +1,4 @@
-/* ═══════════════════════════════════════════════════
-   PredictOps — Data Engine
-   ═══════════════════════════════════════════════════ */
-
+//PredictOps — Data Engine
 const CLIENTS = [
   { id: 0, name: 'Axiom Corp',   dcs: ['US-East-1','US-West-2'] },
   { id: 1, name: 'NexaCloud',    dcs: ['EU-Frankfurt','AP-Singapore'] },

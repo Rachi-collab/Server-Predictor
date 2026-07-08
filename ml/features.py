@@ -1,15 +1,3 @@
-"""
-features.py
-Feature engineering for the server-failure-prediction model.
-
-Input: a long-format telemetry DataFrame with columns
-    ['server_id', 'client_id', 'dc', 'timestamp',
-     'mem_pct', 'disk_io_pct', 'net_latency_ms', 'error_rate', 'crash_count']
-
-Output: a feature matrix with one row per (server_id, timestamp) containing
-rolling-window aggregates suitable for a gradient-boosted tree model.
-"""
-
 import numpy as np
 import pandas as pd
 

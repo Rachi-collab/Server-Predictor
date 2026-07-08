@@ -1,22 +1,13 @@
-/* ═══════════════════════════════════════════════════
-   PredictOps — Site Chrome & Interaction
-   (navbar, hero counters, mobile nav, scroll reveals)
-   ═══════════════════════════════════════════════════ */
-
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   animateHeroStats();
   initMobileMenu();
   initArchReveal();
-  initDashboard();   // starts the live simulated dashboard (js/dashboard.js)
-  animateRings();    // performance ring animations (js/charts.js)
-
-  // Render the performance-section charts once (static, not part of live loop)
+  initDashboard();
+  animateRings();
   renderFeatureChart();
   renderAdaptChart();
 });
-
-// ─── Navbar scroll state ───────────────────────────
 function initNavbar() {
   const nav = document.getElementById('navbar');
   if (!nav) return;
@@ -27,8 +18,6 @@ function initNavbar() {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 }
-
-// ─── Hero stat counters ─────────────────────────────
 function animateHeroStats() {
   const els = document.querySelectorAll('.hero-stat-val[data-target]');
   els.forEach(el => {
@@ -44,25 +33,30 @@ function animateHeroStats() {
     requestAnimationFrame(tick);
   });
 }
-
-// ─── Mobile menu ────────────────────────────────────
 function initMobileMenu() {
   const hamburger = document.getElementById('hamburger');
   const links = document.querySelector('.nav-links');
   if (!hamburger || !links) return;
+
+  const setMenuState = (isOpen) => {
+    links.classList.toggle('is-open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('menu-open', isOpen);
+  };
+
   hamburger.addEventListener('click', () => {
-    const isOpen = links.style.display === 'flex';
-    links.style.display = isOpen ? 'none' : 'flex';
-    links.style.cssText += isOpen ? '' : `
-      position: fixed; top: 64px; left: 0; right: 0;
-      flex-direction: column; background: rgba(8,11,18,0.97);
-      backdrop-filter: blur(16px); padding: 20px 24px;
-      border-bottom: 1px solid var(--border); gap: 18px;
-    `;
+    const isOpen = !links.classList.contains('is-open');
+    setMenuState(isOpen);
+  });
+
+  links.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMenuState(false));
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) setMenuState(false);
   });
 }
-
-// ─── Architecture stage reveal on scroll ───────────
 function initArchReveal() {
   const stages = document.querySelectorAll('.arch-stage');
   if (!stages.length) return;

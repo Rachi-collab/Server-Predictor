@@ -1,7 +1,3 @@
-/* ═══════════════════════════════════════════════════
-   PredictOps — Premium Design System
-   ═══════════════════════════════════════════════════ */
-
 :root {
   --bg:       #080b12;
   --bg-card:  #0d1117;
@@ -51,15 +47,10 @@ img, svg { display: block; }
   margin: 0 auto;
   padding: 0 24px;
 }
-
-/* ─── SCROLLBAR ─────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-card); }
 ::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 3px; }
 
-/* ═══════════════════════════════════════════════════
-   NAVBAR
-   ═══════════════════════════════════════════════════ */
 .navbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -71,6 +62,7 @@ img, svg { display: block; }
 }
 .navbar.scrolled {
   background: rgba(8,11,18,0.85);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   border-bottom-color: var(--border);
 }
@@ -108,6 +100,21 @@ img, svg { display: block; }
   transition: color var(--transition);
 }
 .nav-links a:hover { color: var(--text-1); }
+.nav-links.is-open {
+  display: flex;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  background: rgba(8,11,18,0.97);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  gap: 18px;
+}
+body.menu-open { overflow: hidden; }
 .nav-cta { margin-left: auto; }
 .hamburger {
   display: none;
@@ -124,10 +131,6 @@ img, svg { display: block; }
   border-radius: 2px;
   transition: var(--transition);
 }
-
-/* ═══════════════════════════════════════════════════
-   BUTTONS
-   ═══════════════════════════════════════════════════ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -153,9 +156,6 @@ img, svg { display: block; }
 .btn-ghost:hover { background: var(--bg-glass); color: var(--text-1); border-color: var(--border-md); }
 .btn-lg { padding: 13px 28px; font-size: 15px; border-radius: var(--r-lg); }
 
-/* ═══════════════════════════════════════════════════
-   HERO
-   ═══════════════════════════════════════════════════ */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -171,6 +171,7 @@ img, svg { display: block; }
     linear-gradient(rgba(79,142,247,0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(79,142,247,0.04) 1px, transparent 1px);
   background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 40%, transparent 100%);
   mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 40%, transparent 100%);
 }
 .hero-particles {
@@ -289,9 +290,6 @@ img, svg { display: block; }
   50%    { transform: translateX(-50%) translateY(6px); }
 }
 
-/* ═══════════════════════════════════════════════════
-   SECTIONS
-   ═══════════════════════════════════════════════════ */
 .section {
   padding: 100px 0;
 }
@@ -327,9 +325,6 @@ img, svg { display: block; }
 }
 .section-sub code { font-family: var(--mono); font-size: 14px; color: var(--accent); }
 
-/* ═══════════════════════════════════════════════════
-   FEATURES GRID
-   ═══════════════════════════════════════════════════ */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -425,6 +420,9 @@ img, svg { display: block; }
   color: var(--green);
   font-family: var(--mono);
 }
+.latency-fill--36 {
+  width: 36%;
+}
 .latency-limit {
   position: absolute;
   right: 0;
@@ -432,10 +430,6 @@ img, svg { display: block; }
   font-size: 11px;
   color: var(--text-3);
 }
-
-/* ═══════════════════════════════════════════════════
-   DASHBOARD SHELL
-   ═══════════════════════════════════════════════════ */
 .dashboard-shell {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -516,8 +510,6 @@ img, svg { display: block; }
   background: var(--bg-glass);
   color: var(--text-2);
 }
-
-/* KPI Strip */
 .kpi-strip {
   display: grid;
   grid-template-columns: repeat(6,1fr);
@@ -550,8 +542,6 @@ img, svg { display: block; }
 .kv-warn { color: var(--yellow); }
 .kv-good { color: var(--green); }
 .kv-accent { color: var(--accent); }
-
-/* Chart cards */
 .dash-charts-row {
   display: grid;
   grid-template-columns: repeat(3,1fr);
@@ -564,6 +554,7 @@ img, svg { display: block; }
   padding: 20px;
 }
 .dash-chart-card--wide { flex: 2; }
+.dash-chart-card--stacked { margin-top: 12px; }
 .dash-chart-header {
   display: flex;
   justify-content: space-between;
@@ -591,8 +582,6 @@ img, svg { display: block; }
   gap: 1px;
   background: var(--border);
 }
-
-/* Server table */
 .server-table-wrap { overflow-x: auto; }
 .server-table {
   width: 100%;
@@ -644,8 +633,6 @@ img, svg { display: block; }
   flex-shrink: 0;
 }
 .risk-mini-fill { height: 100%; border-radius: 2px; }
-
-/* DC Heatmap */
 .dc-heatmap { display: flex; flex-direction: column; gap: 8px; }
 .dc-heatmap-row {
   display: flex;
@@ -673,8 +660,6 @@ img, svg { display: block; }
   transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
 }
 .dc-val { width: 36px; text-align: right; font-family: var(--mono); font-size: 11px; color: var(--text-3); }
-
-/* ─── SERVERS VIEW ────────────────────────────────── */
 .servers-filter-row {
   padding: 14px 20px;
   display: flex;
@@ -716,6 +701,12 @@ img, svg { display: block; }
   width: 180px;
 }
 .server-search::placeholder { color: var(--text-3); }
+.server-grid-empty {
+  padding: 32px;
+  color: var(--text-3);
+  grid-column: 1 / -1;
+  text-align: center;
+}
 .server-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
@@ -743,8 +734,6 @@ img, svg { display: block; }
 .srv-risk-pct { font-size: 18px; font-weight: 700; font-family: var(--mono); }
 .srv-risk-bar { flex: 1; height: 3px; background: rgba(255,255,255,.07); border-radius: 2px; overflow: hidden; }
 .srv-risk-fill { height: 100%; border-radius: 2px; }
-
-/* Server detail panel */
 .server-detail-panel {
   border-top: 1px solid var(--border);
   background: var(--bg-card);
@@ -798,8 +787,6 @@ img, svg { display: block; }
   margin-bottom: 16px;
 }
 .sdp-recommendation strong { color: var(--accent); }
-
-/* ─── ALERTS VIEW ─────────────────────────────────── */
 .alerts-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
 .alerts-feed-col { background: var(--bg); padding: 20px; }
 .alerts-chart-col { background: var(--bg); padding: 20px; display: flex; flex-direction: column; gap: 12px; }
@@ -837,10 +824,6 @@ img, svg { display: block; }
 .alert-server { font-size: 12px; font-weight: 600; font-family: var(--mono); margin-bottom: 3px; }
 .alert-msg { font-size: 12px; color: var(--text-2); line-height: 1.4; }
 .alert-time { font-size: 11px; color: var(--text-3); margin-top: 4px; }
-
-/* ═══════════════════════════════════════════════════
-   ARCHITECTURE
-   ═══════════════════════════════════════════════════ */
 .arch-diagram {
   display: flex;
   align-items: flex-start;
@@ -900,7 +883,9 @@ img, svg { display: block; }
   font-size: 20px;
   flex-shrink: 0;
 }
-.missing-data-section { }
+.missing-data-section {
+  margin-top: 48px;
+}
 .mds-title {
   font-size: 18px;
   font-weight: 600;
@@ -937,10 +922,6 @@ img, svg { display: block; }
   margin-bottom: 8px;
 }
 .mds-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-/* ═══════════════════════════════════════════════════
-   PERFORMANCE
-   ═══════════════════════════════════════════════════ */
 .perf-grid {
   display: grid;
   grid-template-columns: repeat(4,1fr);
@@ -1010,10 +991,6 @@ img, svg { display: block; }
 }
 .perf-chart-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; letter-spacing: -.3px; }
 .perf-chart-sub { font-size: 13px; color: var(--text-3); margin-bottom: 20px; }
-
-/* ═══════════════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════════════ */
 .footer {
   border-top: 1px solid var(--border);
   padding: 48px 0 0;
@@ -1052,10 +1029,6 @@ img, svg { display: block; }
   font-size: 12px;
   color: var(--text-3);
 }
-
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════════════════════ */
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .nav-cta { display: none; }
